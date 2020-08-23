@@ -1,24 +1,20 @@
 package tasks;
 
-import reactor.core.publisher.Flux;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import common.stream.InputOutputController;
+import lombok.SneakyThrows;
 import reactor.core.publisher.Mono;
-import reactor.netty.NettyInbound;
-import reactor.netty.NettyOutbound;
 import tasks.base.BaseTask;
 
 public class PipeTask extends BaseTask {
-    public PipeTask(NettyInbound inbound, NettyOutbound outbound) {
-        super(inbound, outbound);
-    }
-
+    @SneakyThrows
     @Override
     public Mono<Void> execute() {
-        Flux<String> result = inbound.receive().asString().flatMap(str -> {
-            System.out.println(str);
+        InputOutputController controller = InputOutputController.getController();
+        ObjectMapper mapper = new ObjectMapper();
 
-            return Mono.just(str);
-        });
-
-        return outbound.sendString(result).then();
+        String json = mapper.writeValueAsString(this.taskData);
+        Mono<String> data = Mono.just(json);
+        return controller.sendData(data);
     }
 }

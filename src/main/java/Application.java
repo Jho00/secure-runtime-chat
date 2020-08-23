@@ -1,7 +1,7 @@
 import io.netty.channel.ChannelOption;
 import reactor.netty.DisposableServer;
 import reactor.netty.tcp.TcpServer;
-import handler.GlobalHandler;
+import handler.ServerHandler;
 
 public class Application {
     private final static String HOST = "localhost";
@@ -15,7 +15,7 @@ public class Application {
                         .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 30000)
                         .doOnBind(any -> printServerUrl())
                         .handle((in, out) -> {
-                            GlobalHandler handler = new GlobalHandler(in, out);
+                            ServerHandler handler = new ServerHandler(in, out);
                             return handler.handle();
                         })
                         .bindNow();

@@ -7,6 +7,13 @@ const client = new net.Socket();
             console.log(data.toString())
         })
         console.log('Connected');
-        client.write('Hello, server! Love, Client.1');
+        const forSend = {
+            action: 'PIPE',
+            data: {
+                test: 1
+            }
+        }
+
+        client.write(JSON.stringify(forSend));
     });
 })()
