@@ -13,13 +13,10 @@ public class ErrorTask extends BaseTask {
         return task;
     }
 
-
     @Override
     public Mono<Void> execute(NettyInputOutputProvider provider) {
-        return null;
+        return this.sendDataToOutChannel(provider);
     }
-
-
 
     public static class ErrorData {
         @Getter

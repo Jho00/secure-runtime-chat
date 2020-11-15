@@ -10,8 +10,9 @@ public abstract class BaseTask {
     @Setter
     protected Object taskData;
 
-    @SneakyThrows
-    public Mono<Void> execute(NettyInputOutputProvider provider) {
+    public abstract Mono<Void> execute(NettyInputOutputProvider provider);
+
+    protected Mono<Void> sendDataToOutChannel(NettyInputOutputProvider provider) {
         return Mono.fromCallable(() -> {
             ObjectMapper mapper = new ObjectMapper();
 
