@@ -1,6 +1,6 @@
 package tasks;
 
-import common.stream.InputOutputProvider;
+import common.stream.NettyInputOutputProvider;
 import lombok.Getter;
 import reactor.core.publisher.Mono;
 import tasks.base.BaseTask;
@@ -15,7 +15,7 @@ public class ErrorTask extends BaseTask {
 
 
     @Override
-    public Mono<Void> execute(InputOutputProvider provider) {
+    public Mono<Void> execute(NettyInputOutputProvider provider) {
         return null;
     }
 
