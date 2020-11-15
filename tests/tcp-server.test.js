@@ -15,5 +15,8 @@ const client = new net.Socket();
         }
 
         client.write(JSON.stringify(forSend));
+        setTimeout(function () {
+            client.write(JSON.stringify(forSend))
+        }, 1500);
     });
 })()

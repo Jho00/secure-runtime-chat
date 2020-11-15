@@ -1,27 +1,31 @@
 package handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import common.stream.InputOutputController;
+import common.stream.InputOutputProvider;
 import handler.dto.RequestMapper;
 import handler.dto.request.Request;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.netty.NettyInbound;
 import reactor.netty.NettyOutbound;
+import tasks.ErrorTask;
+import tasks.base.BaseTask;
 import tasks.utils.TasksMapper;
 
 public class ServerHandler {
     private NettyInbound inbound;
     private NettyOutbound outbound;
 
+    private InputOutputProvider provider;
+
     public ServerHandler(NettyInbound inbound, NettyOutbound outbound) {
         this.inbound = inbound;
         this.outbound = outbound;
+
+        this.provider = new InputOutputProvider(inbound, outbound);
     }
 
     public Flux<Void> handle() {
-        InputOutputController.init(inbound, outbound);
-        System.out.println(1);
         return this.executeTask();
     }
 
@@ -29,12 +33,16 @@ public class ServerHandler {
         return inbound.receive().asString().flatMap(str -> {
             try {
                 Mono<Request> requestMono = RequestMapper.parse(str);
-                return TasksMapper.map(requestMono).execute();
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
+                BaseTask task = TasksMapper.map(requestMono);
 
-            return Mono.empty();
+                if (task == null) {
+                    return ErrorTask.createNewErrorTask().execute(this.provider);
+                }
+
+                return task.execute(this.provider);
+            } catch (JsonProcessingException e) {
+                return ErrorTask.createNewErrorTask().execute(this.provider);
+            }
         });
     }
 }

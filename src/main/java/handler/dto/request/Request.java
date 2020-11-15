@@ -7,5 +7,6 @@ import lombok.Setter;
 @Setter
 public class Request {
     private String action;
+    private String uniqueId;
     private Object data;
 }
