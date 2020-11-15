@@ -4,6 +4,7 @@ import reactor.netty.tcp.TcpServer;
 import handler.ServerHandler;
 
 public class Application {
+    // TODO: move server params to config
     private final static String HOST = "localhost";
     private final static Integer PORT = 8080;
 

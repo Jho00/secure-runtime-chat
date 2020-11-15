@@ -3,6 +3,7 @@ package tasks.utils;
 import common.constants.IncomeActions;
 import handler.dto.request.Request;
 import reactor.core.publisher.Mono;
+import tasks.ErrorTask;
 import tasks.PipeTask;
 import tasks.base.BaseTask;
 
@@ -18,18 +19,17 @@ public class TasksMapper {
         tasksClasses.put(IncomeActions.PIPE_ACTION, PipeTask.class);
     }
 
-    public static BaseTask map(Mono<Request> request) {
-        Request req = request.block();
-        Class<? extends BaseTask> target = tasksClasses.get(req.getAction());
+    public static BaseTask map(Request request) {
+        Class<? extends BaseTask> target = tasksClasses.get(request.getAction());
         try {
             BaseTask task = target.getConstructor().newInstance();
-            task.setTaskData(req.getData());
+            task.setTaskData(request.getData());
             return task;
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            // TODO: handle it
+            // TODO: inject logger
             e.printStackTrace();
-        }
 
-        return null;
+            return ErrorTask.createNewErrorTask();
+        }
     }
 }

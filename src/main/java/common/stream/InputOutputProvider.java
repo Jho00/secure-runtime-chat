@@ -1,10 +1,10 @@
 package common.stream;
 
-import lombok.Getter;
 import reactor.core.publisher.Mono;
 import reactor.netty.NettyInbound;
 import reactor.netty.NettyOutbound;
 
+// TODO: make provider as interface
 public class InputOutputProvider {
     private NettyInbound inbound;
     private NettyOutbound outbound;

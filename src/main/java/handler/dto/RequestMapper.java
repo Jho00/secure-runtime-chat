@@ -12,7 +12,7 @@ public class RequestMapper {
         mapper = new ObjectMapper();
     }
 
-    public static Mono<Request> parse(String received) throws JsonProcessingException {
+    public static Mono<Request> parse(String received) {
         return Mono.fromCallable(() -> mapper.readValue(received, Request.class));
     }
 }
