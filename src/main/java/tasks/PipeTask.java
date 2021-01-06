@@ -1,6 +1,6 @@
 package tasks;
 
-import common.stream.NettyInputOutputProvider;
+import libs.netty.NettyInputOutputProvider;
 import reactor.core.publisher.Mono;
 import tasks.base.BaseTask;
 

@@ -1,6 +1,6 @@
 package tasks;
 
-import common.stream.NettyInputOutputProvider;
+import libs.netty.NettyInputOutputProvider;
 import lombok.Getter;
 import reactor.core.publisher.Mono;
 import tasks.base.BaseTask;

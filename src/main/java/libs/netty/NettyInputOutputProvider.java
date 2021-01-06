@@ -1,11 +1,10 @@
-package common.stream;
+package libs.netty;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.netty.NettyInbound;
 import reactor.netty.NettyOutbound;
 
-// TODO: make provider as interface
 public class NettyInputOutputProvider {
     private NettyInbound inbound;
     private NettyOutbound outbound;
