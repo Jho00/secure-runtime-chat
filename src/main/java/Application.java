@@ -21,7 +21,7 @@ public class Application {
         DisposableServer server =
                 TcpServer.create()
                         .host(HOST)
-                        .port(Integer.valueOf(PORT))
+                        .port(Integer.parseInt(PORT))
                         .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 30000)
                         .doOnBind(any -> printServerUrl())
                         .handle((in, out) -> {
