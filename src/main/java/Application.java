@@ -1,5 +1,6 @@
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import common.config.AppConfig;
 import io.netty.channel.ChannelOption;
 import libs.guice.BasicModule;
 import org.apache.logging.log4j.LogManager;
@@ -9,9 +10,8 @@ import reactor.netty.tcp.TcpServer;
 import handler.ServerHandler;
 
 public class Application {
-    // TODO: move server params to config
-    private final static String HOST = "localhost";
-    private final static Integer PORT = 8080;
+    private final static String HOST = AppConfig.getConfig().getServerHost();
+    private final static String PORT = AppConfig.getConfig().getServerPort();
 
     private static Logger logger;
 
@@ -21,7 +21,7 @@ public class Application {
         DisposableServer server =
                 TcpServer.create()
                         .host(HOST)
-                        .port(PORT)
+                        .port(Integer.valueOf(PORT))
                         .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 30000)
                         .doOnBind(any -> printServerUrl())
                         .handle((in, out) -> {

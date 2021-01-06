@@ -1,18 +1,15 @@
 package handler;
 
-import com.google.inject.Guice;
 import com.google.inject.Inject;
-import com.google.inject.Injector;
-import libs.guice.BasicModule;
+import handler.dto.RequestMapper;
 import libs.guice.InjectableClass;
 import libs.netty.NettyInputOutputProvider;
-import handler.dto.RequestMapper;
+import org.apache.logging.log4j.Logger;
 import reactor.core.publisher.Flux;
 import reactor.netty.NettyInbound;
 import reactor.netty.NettyOutbound;
 import tasks.ErrorTask;
 import tasks.utils.TasksMapper;
-import org.apache.logging.log4j.Logger;
 
 public class ServerHandler extends InjectableClass {
     @Inject
