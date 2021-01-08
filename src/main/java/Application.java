@@ -3,7 +3,6 @@ import com.google.inject.Injector;
 import common.config.AppConfig;
 import io.netty.channel.ChannelOption;
 import libs.guice.BasicModule;
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import reactor.netty.DisposableServer;
 import reactor.netty.tcp.TcpServer;
@@ -23,11 +22,12 @@ public class Application {
                         .host(HOST)
                         .port(Integer.parseInt(PORT))
                         .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 30000)
-                        .doOnBind(any -> printServerUrl())
-                        .handle((in, out) -> {
-                            ServerHandler handler = new ServerHandler(in, out);
-                            return handler.handle();
+                        .doOnConnection(connection -> {
+                            connection.addHandler(
+                                    new ServerHandler(connection.inbound(), connection.outbound())
+                            );
                         })
+                        .doOnBind(any -> printServerUrl())
                         .bindNow();
 
         server.onDispose()

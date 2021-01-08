@@ -2,11 +2,9 @@ package common.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.fasterxml.jackson.dataformat.yaml.snakeyaml.parser.ParserException;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
 
 public class AppConfig {
     private static volatile ConfigModel config = null;
