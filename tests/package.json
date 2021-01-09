@@ -4,7 +4,7 @@
   "description": "Tests for backend of secure-runtime-chat",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --verbose"
   },
   "author": "Jho00",
   "license": "ISC",
