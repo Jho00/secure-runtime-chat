@@ -42,8 +42,8 @@ public class ServerHandler extends InjectableClass implements ChannelHandler {
                                         .execute(provider))
                 )
                 .doOnError((Throwable e) -> {
-                    logger.error(e.getMessage());
-                    ErrorTask.createNewErrorTask().execute(this.provider);
+                    logger.error(e.getLocalizedMessage());
+                    ErrorTask.createNewErrorTask().execute(provider);
                 });
     }
 

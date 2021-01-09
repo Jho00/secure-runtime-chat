@@ -2,21 +2,20 @@ const net = require('net')
 const client = new net.Socket();
 
 const forSend = {
-    action: 'PIPE',
+    action: 'PIPE_ERROR_NAME',
     data: {
         test: 1
     }
 }
 
 const dataString = JSON.stringify(forSend);
-const results = [];
+let result = '';
 
 beforeEach(done => {
     client.connect(8080, '127.0.0.1', async () => {
         client.on('data', (data) => {
             client.destroy();
-            results.push(data.toString());
-            results.push(client.destroyed);
+            result = data.toString()
             done();
         })
 
@@ -24,12 +23,8 @@ beforeEach(done => {
     });
 });
 
-describe('Pipe task', () => {
-    it('Received correct result', () => {
-        expect(results[0]).toBe(JSON.stringify(forSend.data));
-    })
-
-    it('Connection was closed', () => {
-        expect(results[1]).toBe(true);
+describe('Error task', () => {
+    test('Received error result', () => {
+        expect(result).toBe(JSON.stringify({error: true}));
     })
 })

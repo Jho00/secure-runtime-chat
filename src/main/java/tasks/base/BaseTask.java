@@ -2,10 +2,12 @@ package tasks.base;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import libs.netty.NettyInputOutputProvider;
+import lombok.Getter;
 import lombok.Setter;
 import reactor.core.publisher.Mono;
 
 public abstract class BaseTask {
+    @Getter
     @Setter
     protected Object taskData;
 

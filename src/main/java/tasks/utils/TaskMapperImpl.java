@@ -30,6 +30,9 @@ public class TaskMapperImpl extends InjectableClass implements TasksMapper {
 
     public BaseTask map(Request request) {
         Class<? extends BaseTask> target = tasksClasses.get(request.getAction());
+        if (target == null) {
+            return ErrorTask.createNewErrorTask();
+        }
         try {
             BaseTask task = target.getConstructor().newInstance();
             task.setTaskData(request.getData());
